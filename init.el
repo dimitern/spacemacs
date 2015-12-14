@@ -13,6 +13,8 @@
 ;; Without this comment emacs25 adds (package-initialize) here
 ;; (package-initialize)
 
+(require 'url-handlers)
+
 (setq gc-cons-threshold 100000000)
 (defconst spacemacs-version          "0.104.6" "Spacemacs version.")
 (defconst spacemacs-emacs-min-version   "24.3" "Minimal version of Emacs.")
