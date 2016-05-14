@@ -62,28 +62,29 @@ users on `develop' branch must manually pull last commits instead."
   "Periodicly check for new for new Spacemacs version.
 Update `spacemacs-new-version' variable if any new version has been
 found."
-  (if (string-equal "develop" (spacemacs/git-get-current-branch))
-      (message "Skipping check for new version because you are on develop.")
-    (message "Start checking for new version...")
-    (async-start
-     (lambda ()
-       (load-file (concat user-emacs-directory "core/core-load-paths.el"))
-       (require 'core-spacemacs)
-       (spacemacs/get-last-version))
-     (lambda (result)
-       (if result
-           (if (or (version< result spacemacs-version)
-                   (string= result spacemacs-version)
-                   (if spacemacs-new-version
-                       (string= result spacemacs-new-version)))
-               (message "Spacemacs is up to date.")
-             (message "New version of Spacemacs available: %s" result)
-             (setq spacemacs-new-version result))
-         (message "Unable to check for new version."))))
-    (when interval
-      (setq spacemacs-version-check-timer
-            (run-at-time t (timer-duration interval)
-                         'spacemacs/check-for-new-version)))))
+  (when nil
+    (if (string-equal "develop" (spacemacs/git-get-current-branch))
+        (message "Skipping check for new version because you are on develop.")
+      (message "Start checking for new version...")
+      (async-start
+       (lambda ()
+         (load-file (concat user-emacs-directory "core/core-load-paths.el"))
+         (require 'core-spacemacs)
+         (spacemacs/get-last-version))
+       (lambda (result)
+         (if result
+             (if (or (version< result spacemacs-version)
+                     (string= result spacemacs-version)
+                     (if spacemacs-new-version
+                         (string= result spacemacs-new-version)))
+                 (message "Spacemacs is up to date.")
+               (message "New version of Spacemacs available: %s" result)
+               (setq spacemacs-new-version result))
+           (message "Unable to check for new version."))))
+      (when interval
+        (setq spacemacs-version-check-timer
+              (run-at-time t (timer-duration interval)
+                           'spacemacs/check-for-new-version))))))
 
 (defun spacemacs/get-last-version ()
   "Return the last tagged version."
@@ -124,11 +125,11 @@ version and the NEW version."
   (let((proc-buffer "git-has-remote")
        (default-directory (file-truename user-emacs-directory)))
     (when (eq 0 (process-file "git" nil proc-buffer nil "remote"))
-        (with-current-buffer proc-buffer
-          (prog2
-              (goto-char (point-min))
-              (re-search-forward (format "^%s$" remote) nil 'noerror)
-            (kill-buffer proc-buffer))))))
+      (with-current-buffer proc-buffer
+        (prog2
+            (goto-char (point-min))
+            (re-search-forward (format "^%s$" remote) nil 'noerror)
+          (kill-buffer proc-buffer))))))
 
 (defun spacemacs/git-add-remote (remote url)
   "Add a REMOTE with URL, return t if no error."
@@ -190,12 +191,12 @@ version and the NEW version."
       (with-current-buffer proc-buffer
         (prog1
             (when (buffer-string)
-                (end-of-buffer)
-                (forward-line -1)
-                (replace-regexp-in-string
-                 "\n$" ""
-                 (buffer-substring (line-beginning-position)
-                                   (line-end-position))))
+              (end-of-buffer)
+              (forward-line -1)
+              (replace-regexp-in-string
+               "\n$" ""
+               (buffer-substring (line-beginning-position)
+                                 (line-end-position))))
           (kill-buffer proc-buffer))))))
 
 (defun spacemacs/git-checkout (branch)
@@ -208,20 +209,20 @@ version and the NEW version."
       (kill-buffer proc-buffer))))
 
 (defun spacemacs/git-get-current-branch ()
-   "Return the current branch. Return nil if an error occurred."
-   (let((proc-buffer "git-get-current-branch")
-        (default-directory (file-truename user-emacs-directory)))
-     (when (eq 0 (process-file "git" nil proc-buffer nil
-                               "symbolic-ref" "--short" "-q" "HEAD"))
-       (with-current-buffer proc-buffer
-         (prog1
-             (when (buffer-string)
-               (goto-char (point-min))
-               (replace-regexp-in-string
-                "\n$" ""
-                (buffer-substring (line-beginning-position)
-                                  (line-end-position))))
-           (kill-buffer proc-buffer))))))
+  "Return the current branch. Return nil if an error occurred."
+  (let((proc-buffer "git-get-current-branch")
+       (default-directory (file-truename user-emacs-directory)))
+    (when (eq 0 (process-file "git" nil proc-buffer nil
+                              "symbolic-ref" "--short" "-q" "HEAD"))
+      (with-current-buffer proc-buffer
+        (prog1
+            (when (buffer-string)
+              (goto-char (point-min))
+              (replace-regexp-in-string
+               "\n$" ""
+               (buffer-substring (line-beginning-position)
+                                 (line-end-position))))
+          (kill-buffer proc-buffer))))))
 
 (defun spacemacs/git-get-current-branch-rev ()
   "Returns the hash of the head commit on the current branch.
@@ -246,9 +247,9 @@ Returns nil if an error occurred."
                                 (symbol-name state))))
          (foreground (face-foreground state)))
     (eval `(defface ,fname '((t ()))
-             ,(format "Color for new version lighter in mode line (%s)."
-                      (symbol-name state))
-             :group 'spacemacs))
+                    ,(format "Color for new version lighter in mode line (%s)."
+                             (symbol-name state))
+                    :group 'spacemacs))
     (set-face-attribute fname nil
                         :foreground foreground
                         :box (face-attribute 'mode-line :box))))

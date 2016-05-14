@@ -219,7 +219,7 @@ package name does not match theme name + `-theme' suffix.")
 (defadvice load-theme (after spacemacs/load-theme-adv activate)
   "Perform post load processing."
   (let ((theme (ad-get-arg 0)))
-    (setq spacemacs--cur-theme theme)
+    (setq-default spacemacs--cur-theme theme)
     (spacemacs/post-theme-init theme)))
 
 (defun spacemacs/post-theme-init (theme)

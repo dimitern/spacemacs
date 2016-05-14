@@ -71,7 +71,7 @@ configuration in `dotspacemacs/user-config'.")
   "Either `vim' or `emacs'. Evil is always enabled but if the variable
 is `emacs' then the `holy-mode' is enabled at startup.")
 
-(defvar dotspacemacs-startup-banner 'official
+(defvar dotspacemacs-startup-banner nil ;; 'official
    "Specify the startup banner. Default value is `official', it displays
 the official spacemacs logo. An integer value is the index of text
 banner, `random' chooses a random text banner in `core/banners'

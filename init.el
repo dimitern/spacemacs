@@ -31,4 +31,5 @@
   (configuration-layer/sync)
   (spacemacs/setup-startup-hook)
   (require 'server)
-  (unless (server-running-p) (server-start)))
+  (unless (server-running-p) (server-start))
+  (my/set-default-font))
